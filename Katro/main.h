@@ -1,0 +1,32 @@
+#ifndef MAIN_HEADER
+#define MAIN_HEADER
+
+enum SceneId
+{
+	TITLE_SCENE_ID,
+	MAIN_MENU_ID,
+	RULES_MENU_ID,
+	GAME_MENU_ID,
+	PLAYER_MENU_ID,
+	SAVEGAME_MENU_ID,
+	GAME_SCENE_ID
+};
+
+enum SoundEffect
+{
+	BALL_DROP,
+	BALLS_DROP,
+	BALLS_GRAB
+};
+
+enum MusicTrack
+{
+	MANDRY_A,
+	LAIDAMA,
+	PAULINE,
+	SOUL_OF_MBIRA,
+	TWIST_AND_SHOUT,
+	SEGA
+};
+
+#endif

@@ -1,0 +1,107 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Français (Suisse) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRS)
+#ifdef _WIN32
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH_SWISS
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_HOLES               BITMAP                  "holes.bmp"
+IDB_BOARD1              BITMAP                  "board1.bmp"
+IDB_BOARD2              BITMAP                  "board2.bmp"
+IDB_BALLS               BITMAP                  "balls.bmp"
+IDB_HAND                BITMAP                  "hand.bmp"
+IDB_SCENE_BKG           BITMAP                  "scene_bkg.bmp"
+IDB_TITLE               BITMAP                  "title.bmp"
+IDB_TITLE2              BITMAP                  "title2.bmp"
+IDB_BUSH                BITMAP                  "bush.bmp"
+IDB_COCONUTS            BITMAP                  "coconuts.bmp"
+IDB_MAINMENU_BOARD2P    BITMAP                  "mainmenu_board2p.bmp"
+IDB_MAINMENU_BUTTONS    BITMAP                  "mainmenu_buttons.bmp"
+IDB_PALM                BITMAP                  "palm.bmp"
+IDB_STONES              BITMAP                  "stones.bmp"
+IDB_BACK_BUTTON         BITMAP                  "back_button.bmp"
+IDB_SHELL1              BITMAP                  "shell1.bmp"
+IDB_SHELL2              BITMAP                  "shell2.bmp"
+IDB_SHELL3              BITMAP                  "shell3.bmp"
+IDB_BORDER_TOP          BITMAP                  "border_top.bmp"
+IDB_BORDER_BOTTOM       BITMAP                  "border_bottom.bmp"
+IDB_BORDER_LEFT         BITMAP                  "border_left.bmp"
+IDB_BORDER_RIGHT        BITMAP                  "border_right.bmp"
+IDB_BORDER_CORNERS      BITMAP                  "border_corners.bmp"
+IDB_INDICATOR_BKG       BITMAP                  "indicator_bkg.bmp"
+IDB_BOARD_SEPARATOR     BITMAP                  "board_separator.bmp"
+IDB_PLAYERMENU_BUTTON1  BITMAP                  "1p_vs_1cpu.bmp"
+IDB_PLAYERMENU_BUTTON2  BITMAP                  "1p_vs_1p.bmp"
+IDB_PLAYERDLG_BKG       BITMAP                  "playerdlg_bkg.bmp"
+IDB_BTN_OK              BITMAP                  "btn_ok.bmp"
+IDB_TEXTFIELD_BKG       BITMAP                  "textfield_bkg.bmp"
+IDB_GAMEMENU_BUTTONS    BITMAP                  "gamemenu_buttons.bmp"
+IDB_BTN_CANCEL          BITMAP                  "btn_cancel.bmp"
+IDB_RADIOBTN_BKG        BITMAP                  "radiobtn_bkg.bmp"
+IDB_HOLE_TEXT           BITMAP                  "hole_text.bmp"
+IDB_HOLE_8              BITMAP                  "hole_8.bmp"
+IDB_HOLE_12             BITMAP                  "hole_12.bmp"
+IDB_GAMEMENU_BUTTONS_GRAYED BITMAP                  "gamemenu_buttons_grayed.bmp"
+IDB_RULES				BITMAP                  "rules.bmp"
+#endif    // Français (Suisse) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
