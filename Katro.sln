@@ -1,11 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Katro", "Katro\Katro.vcproj", "{5A2D28D3-2CC5-4C2D-9F95-D02128547A03}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32413.511
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Katro", "Katro\Katro.vcxproj", "{5A2D28D3-2CC5-4C2D-9F95-D02128547A03}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KaRes", "KaRes\KaRes.vcproj", "{D8EA2555-A540-4333-88D2-DA62F25E7A69}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KaRes", "KaRes\KaRes.vcxproj", "{D8EA2555-A540-4333-88D2-DA62F25E7A69}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameConfig", "..\GameConfig\GameConfig\GameConfig.vcproj", "{3E0776DE-F13B-4752-8272-1964C411B064}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameConfig", "..\GameConfig\GameConfig\GameConfig.vcxproj", "{3E0776DE-F13B-4752-8272-1964C411B064}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{845463D7-FFE2-44B3-80E4-014320275CD6}"
 EndProject
@@ -32,5 +34,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B762B974-A1A5-4075-8801-425C6E086112}
 	EndGlobalSection
 EndGlobal
