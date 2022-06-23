@@ -14,6 +14,7 @@ public:
 	void despair();
 	void setLevel(int level) {this->level = level;}
 	void think();
+	void think(int);
 protected:
 	Hole* findStartHole(Hole *end);
 	void lookBoard(HoleList *frontHoles, Hole **preciousHole);

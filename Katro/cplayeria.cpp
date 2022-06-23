@@ -1,5 +1,6 @@
 #include "cplayeria.h"
 #include "cball.h"
+#include "cnode.h"
 
 PlayerIA::PlayerIA(Str name) : Player(2, name)
 {
@@ -259,4 +260,13 @@ void PlayerIA::think()
 	else
 		if (!defend(frontHoles))
 			despair();
+}
+
+void PlayerIA::think(int holes)
+{
+	int height = 2;
+	int width = holes / height;
+	Node node = Node(width, height);
+	node.init(board->getHoles(), false);
+	node.init(opponent->getBoard()->getHoles(), true);
 }

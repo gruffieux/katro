@@ -1,12 +1,12 @@
 #include "cnode.h"
 
-Node::Node(int w, int h, int b)
+Node::Node(int w, int h)
 {
 	width = w;
 	height = h;
-	ballsPerHole = b;
 	board = new int*[h];
 	playerBoard = new int*[h];
+	min = max = 0;
 
 	for (int y = 0; y < h; y++)
 	{
@@ -14,8 +14,8 @@ Node::Node(int w, int h, int b)
 		playerBoard[y] = new int[w];
 		for (int x = 0; x < w; x++)
 		{
-			board[y][x] = b;
-			playerBoard[y][x] = b;
+			board[y][x] = 0;
+			playerBoard[y][x] = 0;
 		}
 	}
 }
@@ -32,13 +32,69 @@ Node::~Node()
 	delete playerBoard;
 }
 
-int Node::simulate(int fromX, int fromY)
+void Node::init(LinkedList<Hole*> *holes, bool player)
 {
-	int balls = board[fromY][fromX];
+	int x = 0;
+	LinkedList<Hole*>::Iterator iter(holes);
+	Hole *hole = iter.first();
+
+	while (hole)
+	{
+		if (x > 3)
+			x = 0;
+		else
+			x++;
+		int y = hole->getRank() == Hole::BACK ? 0 : 1;
+		int b = hole->getBalls()->GetElementCount();
+		if (player)
+		{
+			playerBoard[y][x] = b;
+			min += b;
+		}
+		else
+		{
+			board[y][x] = b;
+			max += b;
+		}
+		hole = iter.next();
+	}
+}
+
+void Node::simulate(int fromX, int fromY, bool player)
+{
+	int x = fromX;
+	int y = fromY;
+	int **myBoard = player ? playerBoard : board;
+	int **opBoard = player ? board : playerBoard;
+	int balls = myBoard[y][x];
+	myBoard[y][x] = 0;
 
 	while (balls)
 	{
+		if (y == 0)
+		{
+			if (x < width - 1)
+				x++;
+			else
+				y++;
+		}
+		else
+			if (x > 0)
+				x--;
+			else
+				y--;
+		myBoard[y][x]++;
+		balls--;
+		if (balls == 0)
+			if (opBoard[0][x])
+			{
+				balls++;
+				balls += opBoard[0][x];
+				if (player)
+					min += opBoard[0][x];
+				else
+					max += opBoard[0][x];
+				opBoard[0][x] = 0;
+			}
 	}
-
-	return 0;
 }
