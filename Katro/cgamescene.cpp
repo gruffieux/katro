@@ -579,7 +579,7 @@ void GameScene::play()
 	if (!winner)
 		if (playerIA && playerIA->getActions()->isEmpty())
 		{
-			playerIA->think();
+			playerIA->think(holesTotal);
 			if (playerIA->getFocus())
 			{
 				playerIA->getHand()->centerPosition(playerIA->getFocus());

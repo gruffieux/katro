@@ -1,6 +1,6 @@
 #include "cplayeria.h"
 #include "cball.h"
-#include "cnode.h"
+#include "cnodelist.h"
 
 PlayerIA::PlayerIA(Str name) : Player(2, name)
 {
@@ -264,9 +264,36 @@ void PlayerIA::think()
 
 void PlayerIA::think(int holes)
 {
+	int x, y;
 	int height = 2;
 	int width = holes / height;
-	Node node = Node(width, height);
-	node.init(board->getHoles(), false);
-	node.init(opponent->getBoard()->getHoles(), true);
+	NodeList nodes;
+	LinkedList<Hole*>::Iterator iter(board->getHoles());
+	Hole* hole = iter.first();
+	x = y = 0;
+
+	while (hole)
+	{
+		Node *node = new Node(hole, width, height);
+		node->init(board->getHoles(), false);
+		node->init(opponent->getBoard()->getHoles(), true);
+		node->simulate(x, y, false);
+		if (y == 0)
+		{
+			if (x < width - 1)
+				x++;
+			else
+				y = 1;
+		}
+		else
+			if (x > 0)
+				x--;
+		nodes.AddElement(node);
+		hole = iter.next();
+	}
+
+	nodes.OrderBy(NodeList::ORDER_BY_MAX);
+	nodes.ReverseOrder();
+
+	focus = nodes.getNodeElement(0)->getFocus();
 }

@@ -1,9 +1,10 @@
 #include "cnode.h"
 
-Node::Node(int w, int h)
+Node::Node(Hole *hole, int w, int h)
 {
 	width = w;
 	height = h;
+	focus = hole;
 	board = new int*[h];
 	playerBoard = new int*[h];
 	min = max = 0;
@@ -34,27 +35,34 @@ Node::~Node()
 
 void Node::init(LinkedList<Hole*> *holes, bool player)
 {
-	int x = 0;
+	int x, y;
 	LinkedList<Hole*>::Iterator iter(holes);
 	Hole *hole = iter.first();
 
+	x = y = 0;
+
 	while (hole)
 	{
-		if (x > 3)
-			x = 0;
+		int balls = hole->getBalls()->GetElementCount();
+		if (y == 0)
+		{
+			if (x < width - 1)
+				x++;
+			else
+				y = 1;
+		}
 		else
-			x++;
-		int y = hole->getRank() == Hole::BACK ? 0 : 1;
-		int b = hole->getBalls()->GetElementCount();
+			if (x > 0)
+				x--;
 		if (player)
 		{
-			playerBoard[y][x] = b;
-			min += b;
+			playerBoard[y][x] = balls;
+			min += balls;
 		}
 		else
 		{
-			board[y][x] = b;
-			max += b;
+			board[y][x] = balls;
+			max += balls;
 		}
 		hole = iter.next();
 	}
