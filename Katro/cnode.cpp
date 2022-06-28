@@ -1,19 +1,19 @@
 #include "cnode.h"
 
-Node::Node(Hole *hole, int w, int h)
+Node::Node(int width, int height, Hole *focus)
 {
-	width = w;
-	height = h;
-	focus = hole;
-	board = new int*[h];
-	playerBoard = new int*[h];
+	this->width = width;
+	this->height = height;
+	this->focus = focus;
+	board = new int*[height];
+	playerBoard = new int*[height];
 	min = max = 0;
 
-	for (int y = 0; y < h; y++)
+	for (int y = 0; y < height; y++)
 	{
-		board[y] = new int[w];
-		playerBoard[y] = new int[w];
-		for (int x = 0; x < w; x++)
+		board[y] = new int[width];
+		playerBoard[y] = new int[width];
+		for (int x = 0; x < width; x++)
 		{
 			board[y][x] = 0;
 			playerBoard[y][x] = 0;
@@ -35,25 +35,15 @@ Node::~Node()
 
 void Node::init(LinkedList<Hole*> *holes, bool player)
 {
-	int x, y;
+	int x = 0;
+	int y = 1;
 	LinkedList<Hole*>::Iterator iter(holes);
 	Hole *hole = iter.first();
 
-	x = y = 0;
-
+	// Le premier trou se trouve en bas à gauche et le dernier en haut à gauche
 	while (hole)
 	{
 		int balls = hole->getBalls()->GetElementCount();
-		if (y == 0)
-		{
-			if (x < width - 1)
-				x++;
-			else
-				y = 1;
-		}
-		else
-			if (x > 0)
-				x--;
 		if (player)
 		{
 			playerBoard[y][x] = balls;
@@ -64,14 +54,35 @@ void Node::init(LinkedList<Hole*> *holes, bool player)
 			board[y][x] = balls;
 			max += balls;
 		}
+		if (y == 1)
+		{
+			if (x < width - 1)
+				x++;
+			else
+				y = 0;
+		}
+		else
+			if (x > 0)
+				x--;
 		hole = iter.next();
 	}
 }
 
-void Node::simulate(int fromX, int fromY, bool player)
+void Node::simulate(int index, bool player)
 {
-	int x = fromX;
-	int y = fromY;
+	int x, y;
+
+	if (index < width)
+	{
+		y = 1;
+		x = width - (width - index);
+	}
+	else
+	{
+		y = 0;
+		x = width - index + width - 1;
+	}
+	
 	int **myBoard = player ? playerBoard : board;
 	int **opBoard = player ? board : playerBoard;
 	int balls = myBoard[y][x];
@@ -94,9 +105,9 @@ void Node::simulate(int fromX, int fromY, bool player)
 		myBoard[y][x]++;
 		balls--;
 		if (balls == 0)
-			if (opBoard[0][x])
+			if (y == 1 && opBoard[0][x])
 			{
-				balls++;
+				balls += board[y][x] + 1;
 				balls += opBoard[0][x];
 				if (player)
 					min += opBoard[0][x];

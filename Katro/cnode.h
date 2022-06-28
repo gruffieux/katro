@@ -6,10 +6,10 @@
 class Node : public Object
 {
 public:
-	Node(Hole*, int, int);
+	Node(int, int, Hole*);
 	~Node();
 	void init(LinkedList<Hole*>*, bool player);
-	void simulate(int, int, bool);
+	void simulate(int, bool);
 	int getMin() { return min; }
 	int getMax() { return max; }
 	Hole* getFocus() { return focus; }

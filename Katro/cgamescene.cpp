@@ -850,7 +850,7 @@ void GameScene::start()
 	}
 
 	// Définit le joueur qui commence
-	setCurrentPlayer(playerNb);
+	setCurrentPlayer(2/*playerNb*/);
 
 	separator->setName(BuildString("%s commence...", currentPlayer()->getName()->Get()));
 
