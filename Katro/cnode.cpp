@@ -104,10 +104,12 @@ void Node::simulate(int index, bool player)
 				y--;
 		myBoard[y][x]++;
 		balls--;
-		if (balls == 0)
+		if (balls == 0 && myBoard[y][x] > 1)
+		{
+			balls += myBoard[y][x];
+			myBoard[y][x] = 0;
 			if (y == 1 && opBoard[0][x])
 			{
-				balls += board[y][x] + 1;
 				balls += opBoard[0][x];
 				if (player)
 					min += opBoard[0][x];
@@ -115,5 +117,6 @@ void Node::simulate(int index, bool player)
 					max += opBoard[0][x];
 				opBoard[0][x] = 0;
 			}
+		}
 	}
 }
