@@ -1,6 +1,5 @@
 #include "cplayeria.h"
 #include "cball.h"
-#include "cnodelist.h"
 
 PlayerIA::PlayerIA(Str name) : Player(2, name)
 {
@@ -172,6 +171,11 @@ void PlayerIA::lookOpBoard(HoleList *frontBalls)
 	}
 }
 
+int PlayerIA::minimax(Node *node, int depth, bool isPlayer)
+{
+	return 0;
+}
+
 bool PlayerIA::searchStartHole(LinkedList<Hole*>::Iterator vBoardIter, LinkedList<Hole*>::Iterator targetBoardIter, int distance, int maxStep, int step)
 {
 	int i, n, d;
@@ -288,5 +292,6 @@ void PlayerIA::think(int holes)
 	nodes.OrderBy(NodeList::ORDER_BY_MAX);
 	nodes.ReverseOrder();
 
-	focus = nodes.getNodeElement(0)->getFocus();
+	focus = Node::getNodeElement(&nodes, 0)->getFocus();
 }
+

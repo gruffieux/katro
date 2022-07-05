@@ -3,6 +3,7 @@
 
 #include "cplayer.h"
 #include "cholelist.h"
+#include "cnodelist.h"
 
 class PlayerIA : public Player
 {
@@ -12,6 +13,7 @@ public:
 	bool attack(HoleList holes);
 	bool defend(HoleList holes);
 	void despair();
+	int minimax(Node *node, int depth, bool isPlayer);
 	void setLevel(int level) {this->level = level;}
 	void think();
 	void think(int);
