@@ -171,9 +171,55 @@ void PlayerIA::lookOpBoard(HoleList *frontBalls)
 	}
 }
 
-int PlayerIA::minimax(Node *node, int depth, bool isPlayer)
+int PlayerIA::minimax(Node *node, int depth, bool maximizingPlayer)
 {
-	return 0;
+	int value = 0;
+	int height = 2;
+	int width = holes / height;
+
+	if (node == NULL)
+		node = new Node();
+
+	LinkedList<Hole*>::Iterator iter(board->getHoles());
+	Hole* hole = iter.first();
+	int i = 0;
+	while (hole)
+	{
+		if (hole->getBalls()->GetElementCount())
+		{
+			Node* child = new Node(width, height, hole);
+			child->init(board->getHoles(), false);
+			child->init(opponent->getBoard()->getHoles(), true);
+			child->simulate(i, !maximizingPlayer);
+			node->getChilds()->AddElement(child);
+		}
+		hole = iter.next();
+		i++;
+	}
+
+	if (depth == 0 || node->hasChild() == false)
+		return node->getScore();
+
+	if (maximizingPlayer)
+	{
+		value = -1;
+		for (int i = 0; i < node->getChilds()->GetElementCount(); i++)
+		{
+			Node *child = Node::getNodeElement(node->getChilds(), i);
+			value = max(value, minimax(child, depth - 1, false));
+		}
+	}
+	else
+	{
+		value = 999;
+		for (int i = 0; i < node->getChilds()->GetElementCount(); i++)
+		{
+			Node* child = Node::getNodeElement(node->getChilds(), i);
+			value = min(value, minimax(child, depth - 1, true));
+		}
+	}
+
+	return value;
 }
 
 bool PlayerIA::searchStartHole(LinkedList<Hole*>::Iterator vBoardIter, LinkedList<Hole*>::Iterator targetBoardIter, int distance, int maxStep, int step)
@@ -271,27 +317,14 @@ void PlayerIA::think(int holes)
 	int i = 0;
 	int height = 2;
 	int width = holes / height;
-	NodeList nodes;
-	LinkedList<Hole*>::Iterator iter(board->getHoles());
-	Hole* hole = iter.first();
+	this->holes = holes;
 
-	while (hole)
-	{
-		if (hole->getBalls()->GetElementCount())
-		{ 
-			Node* node = new Node(width, height, hole);
-			node->init(board->getHoles(), false);
-			node->init(opponent->getBoard()->getHoles(), true);
-			node->simulate(i, false);
-			nodes.AddElement(node);
-		}
-		hole = iter.next();
-		i++;
-	}
+	Node* node = new Node();
+	int value = minimax(node, 3, true);
 
-	nodes.OrderBy(NodeList::ORDER_BY_MAX);
-	nodes.ReverseOrder();
+	node->getChilds()->OrderBy(NodeList::ORDER_BY_SCORE);
+	node->getChilds()->ReverseOrder();
 
-	focus = Node::getNodeElement(&nodes, 0)->getFocus();
+	focus = Node::getNodeElement(node->getChilds(), 0)->getFocus();
 }
 

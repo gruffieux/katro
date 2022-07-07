@@ -13,7 +13,7 @@ public:
 	bool attack(HoleList holes);
 	bool defend(HoleList holes);
 	void despair();
-	int minimax(Node *node, int depth, bool isPlayer);
+	int minimax(Node *node, int depth, bool player);
 	void setLevel(int level) {this->level = level;}
 	void think();
 	void think(int);
@@ -22,7 +22,7 @@ protected:
 	void lookBoard(HoleList *frontHoles, Hole **preciousHole);
 	void lookOpBoard(HoleList *frontBalls);
 private:
-	int level;
+	int level, holes;
 	bool searchStartHole(LinkedList<Hole*>::Iterator vBoardIter, LinkedList<Hole*>::Iterator targetBoardIter, int distance, int maxStep, int step);
 };
 

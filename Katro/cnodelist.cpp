@@ -7,7 +7,7 @@ Node::Node(int width, int height, Hole* focus)
 	this->focus = focus;
 	board = new int* [height];
 	playerBoard = new int* [height];
-	min = max = 0;
+	score = 0;
 
 	for (int y = 0; y < height; y++)
 	{
@@ -39,21 +39,17 @@ void Node::init(LinkedList<Hole*>* holes, bool player)
 	int y = 1;
 	LinkedList<Hole*>::Iterator iter(holes);
 	Hole* hole = iter.first();
+	score = 0;
 
 	// Le premier trou se trouve en bas à gauche et le dernier en haut à gauche
 	while (hole)
 	{
 		int balls = hole->getBalls()->GetElementCount();
+		score += balls;
 		if (player)
-		{
 			playerBoard[y][x] = balls;
-			min += balls;
-		}
 		else
-		{
 			board[y][x] = balls;
-			max += balls;
-		}
 		if (y == 1)
 		{
 			if (x < width - 1)
@@ -111,10 +107,7 @@ void Node::simulate(int index, bool player)
 			if (y == 1 && opBoard[0][x])
 			{
 				balls += opBoard[0][x];
-				if (player)
-					min += opBoard[0][x];
-				else
-					max += opBoard[0][x];
+				score += balls;
 				opBoard[0][x] = 0;
 			}
 		}
@@ -147,16 +140,9 @@ int NodeList::OrderBy(int NewOrder, Container* pContainer)
 	{
 		switch (NewOrder)
 		{
-		case ORDER_BY_MIN:
+		case ORDER_BY_SCORE:
 			for (i = 0; i < ElementCount; i++)
-				pList[i].Content->getSortData()->num = Node::getNodeElement(this, i)->getMin();
-			result = OrderElements(ORDER_NUM);
-			if (!result)
-				return result;
-			break;
-		case ORDER_BY_MAX:
-			for (i = 0; i < ElementCount; i++)
-				pList[i].Content->getSortData()->num = Node::getNodeElement(this, i)->getMax();
+				pList[i].Content->getSortData()->num = Node::getNodeElement(this, i)->getScore();
 			result = OrderElements(ORDER_NUM);
 			if (!result)
 				return result;
