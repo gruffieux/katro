@@ -4,6 +4,8 @@ Node::Node(int width, int height, Hole* focus)
 {
 	this->width = width;
 	this->height = height;
+	this->min = -1;
+	this->max = 999;
 	this->focus = focus;
 	board = new int* [height];
 	playerBoard = new int* [height];

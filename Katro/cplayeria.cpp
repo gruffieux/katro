@@ -208,6 +208,7 @@ int PlayerIA::minimax(Node *node, int depth, bool maximizingPlayer)
 			Node *child = Node::getNodeElement(node->getChilds(), i);
 			value = max(value, minimax(child, depth - 1, false));
 		}
+		node->setMax(value);
 	}
 	else
 	{
@@ -217,6 +218,7 @@ int PlayerIA::minimax(Node *node, int depth, bool maximizingPlayer)
 			Node* child = Node::getNodeElement(node->getChilds(), i);
 			value = min(value, minimax(child, depth - 1, true));
 		}
+		node->setMin(value);
 	}
 
 	return value;

@@ -26,8 +26,10 @@ public:
 	int getScore() { return score; }
 	NodeList* getChilds() { return &childs; }
 	bool hasChild() { return childs.GetElementCount() > 0; }
+	void setMax(int max) { this->max = max; }
+	void setMin(int min) { this->min = min; }
 private:
-	int width, height, score;
+	int width, height, score, min, max;
 	int **board, **playerBoard;
 	Hole* focus;
 	NodeList childs;
