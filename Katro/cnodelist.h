@@ -20,7 +20,7 @@ public:
 	Node(int, int, Hole*);
 	~Node();
 	void init(LinkedList<Hole*>*, bool player);
-	bool simulate(int, bool);
+	bool simulate(int, bool, int);
 	Hole* getFocus() { return focus; }
 	static Node* getNodeElement(List* pList, int index) { return dynamic_cast<Node*>(pList->GetElement(index)); }
 	int getScore() { return score; }

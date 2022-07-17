@@ -64,19 +64,20 @@ void Node::init(LinkedList<Hole*>* holes, bool player)
 	}
 }
 
-bool Node::simulate(int index, bool player)
+// TODO: Score bonus pour les billes à l'arrière et malus pour les billes à l'avant
+bool Node::simulate(int index, bool player, int maxRounds)
 {
-	int x, y;
+	int x, y, xStart, yStart;
 
 	if (index < width)
 	{
-		y = 1;
-		x = width - (width - index);
+		y = yStart = 1;
+		x = xStart = width - (width - index);
 	}
 	else
 	{
-		y = 0;
-		x = width - index + width - 1;
+		y = yStart = 0;
+		x = xStart = width - index + width - 1;
 	}
 
 	int** myBoard = player ? playerBoard : board;
@@ -112,8 +113,9 @@ bool Node::simulate(int index, bool player)
 				opBoard[0][x] = 0;
 			}
 		}
-		rounds++;
-		if (rounds >= 100000000)
+		if (y == yStart && x == xStart)
+			rounds++;
+		if (rounds >= maxRounds)
 		{
 			score = 0;
 			return false;

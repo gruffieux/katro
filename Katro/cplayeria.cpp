@@ -9,7 +9,7 @@ PlayerIA::PlayerIA(Str name) : Player(2, name)
 PlayerIA::~PlayerIA()
 {
 }
-
+/*
 bool PlayerIA::attack(HoleList holes)
 {
 	int i;
@@ -170,15 +170,12 @@ void PlayerIA::lookOpBoard(HoleList *frontBalls)
 		hole = iter.next();
 	}
 }
-
-int PlayerIA::minimax(Node *node, int depth, bool maximizingPlayer, int alpha, int beta)
+*/
+int PlayerIA::minimax(Node *node, int holes, int depth, bool maximizingPlayer, int alpha, int beta)
 {
 	int value = 0;
 	int height = 2;
 	int width = holes / height;
-
-	if (node == NULL)
-		node = new Node();
 
 	LinkedList<Hole*>::Iterator iter(board->getHoles());
 	Hole* hole = iter.first();
@@ -190,8 +187,12 @@ int PlayerIA::minimax(Node *node, int depth, bool maximizingPlayer, int alpha, i
 			Node* child = new Node(width, height, hole);
 			child->init(board->getHoles(), false);
 			child->init(opponent->getBoard()->getHoles(), true);
-			if (!child->simulate(i, !maximizingPlayer))
-				return 0;
+			if (!child->simulate(i, !maximizingPlayer, level * 3))
+			{
+				hole = iter.next();
+				i++;
+				continue;
+			}
 			node->getChilds()->AddElement(child);
 		}
 		hole = iter.next();
@@ -207,7 +208,7 @@ int PlayerIA::minimax(Node *node, int depth, bool maximizingPlayer, int alpha, i
 		for (int i = 0; i < node->getChilds()->GetElementCount(); i++)
 		{
 			Node *child = Node::getNodeElement(node->getChilds(), i);
-			value = max(value, minimax(child, depth - 1, false, alpha, beta));
+			value = max(value, minimax(child, holes, depth - 1, false, alpha, beta));
 			if (value >= beta)
 			{
 				node->getChilds()->RemoveAllElement(i + 1, true);
@@ -222,7 +223,7 @@ int PlayerIA::minimax(Node *node, int depth, bool maximizingPlayer, int alpha, i
 		for (int i = 0; i < node->getChilds()->GetElementCount(); i++)
 		{
 			Node* child = Node::getNodeElement(node->getChilds(), i);
-			value = min(value, minimax(child, depth - 1, true, alpha, beta));
+			value = min(value, minimax(child, holes, depth - 1, true, alpha, beta));
 			if (value <= alpha)
 			{
 				node->getChilds()->RemoveAllElement(i + 1, true);
@@ -234,7 +235,7 @@ int PlayerIA::minimax(Node *node, int depth, bool maximizingPlayer, int alpha, i
 
 	return value;
 }
-
+/*
 bool PlayerIA::searchStartHole(LinkedList<Hole*>::Iterator vBoardIter, LinkedList<Hole*>::Iterator targetBoardIter, int distance, int maxStep, int step)
 {
 	int i, n, d;
@@ -324,20 +325,37 @@ void PlayerIA::think()
 		if (!defend(frontHoles))
 			despair();
 }
-
+*/
 void PlayerIA::think(int holes)
 {
 	int i = 0;
-	int height = 2;
-	int width = holes / height;
-	this->holes = holes;
-
 	Node* node = new Node();
-	int value = minimax(node, 3, true, -1, 999);
+	int value = minimax(node, holes, level, true, -1, 999);
 
-	node->getChilds()->OrderBy(NodeList::ORDER_BY_SCORE);
-	node->getChilds()->ReverseOrder();
+	focus = NULL;
 
-	focus = Node::getNodeElement(node->getChilds(), 0)->getFocus();
+	if (node->getChilds()->GetElementCount())
+	{
+		node->getChilds()->OrderBy(NodeList::ORDER_BY_SCORE);
+		node->getChilds()->ReverseOrder();
+		focus = Node::getNodeElement(node->getChilds(), 0)->getFocus();
+	}
+	else
+	{
+		Hole* hole;
+		HoleList holes;
+		LinkedList<Hole*>::Iterator iter(board->getHoles());
+		hole = iter.first();
+		while (hole)
+		{
+			if (hole->getBalls()->GetElementCount())
+				holes.AddElement(hole);
+			hole = iter.next();
+		}
+		if (holes.GetElementCount())
+		{
+			i = Clock::random(0, holes.GetElementCount() - 1);
+			focus = holes.getHoleElement(i);
+		}
+	}
 }
-
