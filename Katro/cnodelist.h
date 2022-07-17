@@ -20,16 +20,14 @@ public:
 	Node(int, int, Hole*);
 	~Node();
 	void init(LinkedList<Hole*>*, bool player);
-	void simulate(int, bool);
+	bool simulate(int, bool);
 	Hole* getFocus() { return focus; }
 	static Node* getNodeElement(List* pList, int index) { return dynamic_cast<Node*>(pList->GetElement(index)); }
 	int getScore() { return score; }
 	NodeList* getChilds() { return &childs; }
 	bool hasChild() { return childs.GetElementCount() > 0; }
-	void setMax(int max) { this->max = max; }
-	void setMin(int min) { this->min = min; }
 private:
-	int width, height, score, min, max;
+	int width, height, score;
 	int **board, **playerBoard;
 	Hole* focus;
 	NodeList childs;

@@ -4,8 +4,6 @@ Node::Node(int width, int height, Hole* focus)
 {
 	this->width = width;
 	this->height = height;
-	this->min = -1;
-	this->max = 999;
 	this->focus = focus;
 	board = new int* [height];
 	playerBoard = new int* [height];
@@ -66,7 +64,7 @@ void Node::init(LinkedList<Hole*>* holes, bool player)
 	}
 }
 
-void Node::simulate(int index, bool player)
+bool Node::simulate(int index, bool player)
 {
 	int x, y;
 
@@ -84,6 +82,7 @@ void Node::simulate(int index, bool player)
 	int** myBoard = player ? playerBoard : board;
 	int** opBoard = player ? board : playerBoard;
 	int balls = myBoard[y][x];
+	int rounds = 0;
 	myBoard[y][x] = 0;
 
 	while (balls)
@@ -113,7 +112,15 @@ void Node::simulate(int index, bool player)
 				opBoard[0][x] = 0;
 			}
 		}
+		rounds++;
+		if (rounds >= 100000000)
+		{
+			score = 0;
+			return false;
+		}	
 	}
+
+	return true;
 }
 
 NodeList::NodeList()

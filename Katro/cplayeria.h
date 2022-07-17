@@ -13,7 +13,7 @@ public:
 	bool attack(HoleList holes);
 	bool defend(HoleList holes);
 	void despair();
-	int minimax(Node *node, int depth, bool player);
+	int minimax(Node *node, int depth, bool player, int alpha, int beta);
 	void setLevel(int level) {this->level = level;}
 	void think();
 	void think(int);
