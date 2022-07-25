@@ -10,6 +10,7 @@ public:
 	NodeList(int order);
 	NodeList(NodeList& model);
 	~NodeList();
+	bool filterHighestScore(int delta);
 	int OrderBy(int NewOrder, Container* pContainer = NULL);
 };
 

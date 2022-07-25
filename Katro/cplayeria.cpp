@@ -330,15 +330,18 @@ void PlayerIA::think(int holes)
 {
 	int i = 0;
 	Node* node = new Node();
-	int value = minimax(node, holes, level, true, -1, 999);
+	int value = minimax(node, holes, level-1, true, -1, 999);
 
 	focus = NULL;
 
 	if (node->getChilds()->GetElementCount())
 	{
-		node->getChilds()->OrderBy(NodeList::ORDER_BY_SCORE);
-		node->getChilds()->ReverseOrder();
-		focus = Node::getNodeElement(node->getChilds(), 0)->getFocus();
+		int max = holes;
+		if (level > 1)
+			max /= level == 3 ? holes : 2;
+		node->getChilds()->filterHighestScore(max);
+		i = Clock::random(0, node->getChilds()->GetElementCount() - 1);
+		focus = Node::getNodeElement(node->getChilds(), i)->getFocus();
 	}
 	else
 	{

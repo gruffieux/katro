@@ -64,7 +64,6 @@ void Node::init(LinkedList<Hole*>* holes, bool player)
 	}
 }
 
-// TODO: Score bonus pour les billes à l'arrière et malus pour les billes à l'avant
 bool Node::simulate(int index, bool player, int maxRounds)
 {
 	int x, y, xStart, yStart;
@@ -80,6 +79,8 @@ bool Node::simulate(int index, bool player, int maxRounds)
 		x = xStart = width - index + width - 1;
 	}
 
+	int y1 = player ? 0 : 1;
+	int y2 = player ? 1 : 0;
 	int** myBoard = player ? playerBoard : board;
 	int** opBoard = player ? board : playerBoard;
 	int balls = myBoard[y][x];
@@ -106,11 +107,11 @@ bool Node::simulate(int index, bool player, int maxRounds)
 		{
 			balls += myBoard[y][x];
 			myBoard[y][x] = 0;
-			if (y == 1 && opBoard[0][x])
+			if (y == y1 && opBoard[y2][x])
 			{
-				balls += opBoard[0][x];
+				balls += opBoard[y2][x];
 				score += balls;
-				opBoard[0][x] = 0;
+				opBoard[y2][x] = 0;
 			}
 		}
 		if (y == yStart && x == xStart)
@@ -139,6 +140,19 @@ NodeList::NodeList(NodeList& model) : List(model)
 
 NodeList::~NodeList()
 {
+}
+
+bool NodeList::filterHighestScore(int max)
+{
+	OrderBy(NodeList::ORDER_BY_SCORE);
+	ReverseOrder();
+	int i = 0;
+
+	while (++i < ElementCount)
+		if (i >= max)
+			return RemoveAllElement(i, true);
+
+	return true;
 }
 
 int NodeList::OrderBy(int NewOrder, Container* pContainer)
