@@ -142,17 +142,12 @@ NodeList::~NodeList()
 {
 }
 
-bool NodeList::filterHighestScore(int max)
+bool NodeList::filterHighestScore(int index)
 {
 	OrderBy(NodeList::ORDER_BY_SCORE);
 	ReverseOrder();
-	int i = 0;
 
-	while (++i < ElementCount)
-		if (i >= max)
-			return RemoveAllElement(i, true);
-
-	return true;
+	return RemoveAllElement(index, true);
 }
 
 int NodeList::OrderBy(int NewOrder, Container* pContainer)
