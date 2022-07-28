@@ -369,6 +369,11 @@ bool ProcessKbInput()
 				gameScene->updateTurnIndicator();
 			}
 		}
+		if (gameScene->currentPlayer()->getNumber() == 1 && keybListener.keyPressed(DIK_A))
+		{
+			gameScene->abandon(gameScene->currentPlayer());
+			gameScene->updateTurnIndicator();
+		}
 	}
 
 	if (keybListener.keyPressed((Str)"Configuration", config.GetKeyMap()))

@@ -112,6 +112,15 @@ GameScene::~GameScene()
 	scoreIndicators.RemoveAllElement(0, true);
 }
 
+void GameScene::abandon(Player *player)
+{
+	player->abandon();
+	//Player::access = false;
+	winner = player->getOpponent()->getNumber();
+	separator->setName(BuildString("%s déclare forfait, %s a gagné la partie!", player->getName()->Get(), player->getOpponent()->getName()->Get()));
+
+}
+
 Player* GameScene::currentPlayer()
 {
 	if (playersIter.hasCurrent())
@@ -850,6 +859,7 @@ void GameScene::start()
 	}
 
 	// Définit le joueur qui commence
+	//playerNb = 1;
 	setCurrentPlayer(playerNb);
 
 	separator->setName(BuildString("%s commence...", currentPlayer()->getName()->Get()));

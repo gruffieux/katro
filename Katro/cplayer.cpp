@@ -37,6 +37,13 @@ Player::~Player()
 	delete board;
 }
 
+void Player::abandon()
+{
+	ballsInHand.RemoveAllElement();
+
+	insertAction(TURN_ABORT, true);
+}
+
 void Player::abortTurn()
 {
 	actions.clear();

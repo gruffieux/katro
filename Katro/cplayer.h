@@ -24,6 +24,7 @@ public:
 	Player(int number, Str name);
 	~Player();
 
+	void abandon();
 	LinkedList<int>* getActions() {return &actions;}
 	Board* getBoard() {return board;}
 	Hole* getFocus() {return focus;}

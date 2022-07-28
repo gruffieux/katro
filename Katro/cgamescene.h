@@ -22,6 +22,7 @@ public:
 	GameScene();
 	GameScene(int holesTotal, PlayerMode playerMode, GameMode gameMode, Mover *hand);
 	~GameScene();
+	void abandon(Player* player);
 	Player* currentPlayer();
 	void destroy();
 	void destroyAni();
