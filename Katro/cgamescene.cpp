@@ -115,10 +115,8 @@ GameScene::~GameScene()
 void GameScene::abandon(Player *player)
 {
 	player->abandon();
-	//Player::access = false;
 	winner = player->getOpponent()->getNumber();
-	separator->setName(BuildString("%s déclare forfait, %s a gagné la partie!", player->getName()->Get(), player->getOpponent()->getName()->Get()));
-
+	separator->setName(BuildString("%s abandonne, %s a gagné la partie!", player->getName()->Get(), player->getOpponent()->getName()->Get()));
 }
 
 Player* GameScene::currentPlayer()

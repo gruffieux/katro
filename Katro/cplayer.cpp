@@ -39,8 +39,6 @@ Player::~Player()
 
 void Player::abandon()
 {
-	ballsInHand.RemoveAllElement();
-
 	insertAction(TURN_ABORT, true);
 }
 
