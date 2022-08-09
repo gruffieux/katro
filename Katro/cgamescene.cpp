@@ -183,7 +183,7 @@ void GameScene::doMouseEvents(Cursor *cursor)
 			if (score != -1)
 				currentPlayer()->getFocus()->setVScore(score);
 			else
-				currentPlayer()->getFocus()->setVScore(-999);
+				currentPlayer()->getFocus()->setVScore(PlayerIA::INFINITY);
 		}
 	}
 
@@ -198,7 +198,7 @@ void GameScene::doMouseEvents(Cursor *cursor)
 		}
 		else if (cursor->collision(currentPlayer()->getBoard()) && !winner)
 		{
-			if (currentPlayer()->getFocus()->getVScore() == -999)
+			if (currentPlayer()->getFocus()->getVScore() == PlayerIA::INFINITY)
 			{
 				separator->setName("Cible invalide car peut provoquer une boucle infinie!");
 				updateTurnIndicator(RGB(255, 9, 33));
