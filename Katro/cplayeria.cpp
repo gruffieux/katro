@@ -26,7 +26,7 @@ int PlayerIA::minimax(Node *node, int holes, int depth, bool maximizingPlayer, i
 			Node* child = new Node(width, height, hole);
 			child->init(board->getHoles(), false);
 			child->init(opponent->getBoard()->getHoles(), true);
-			if (!child->simulate(i, !maximizingPlayer, level * 3))
+			if (!child->simulate(i, !maximizingPlayer, level * 4))
 			{
 				hole = iter.next();
 				i++;

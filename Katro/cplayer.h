@@ -24,7 +24,6 @@ public:
 	Player(int number, Str name);
 	~Player();
 
-	void abandon();
 	LinkedList<int>* getActions() {return &actions;}
 	Board* getBoard() {return board;}
 	Hole* getFocus() {return focus;}
@@ -34,11 +33,13 @@ public:
 	Action playTurn();
 	void prepareBoard();
 	void prepareTestBoard(int *tab);
+	void resetVScore();
 	void setFocus(Hole *focus) {this->focus = focus;}
 	void setHand(Mover *hand) {this->hand = hand;}
 	void setOpponent(Player *opponent) {this->opponent = opponent;}
 	void startTurn(Board::Direction direction);
-	bool updateFocus();
+	int tryFocus(int index, int holes);
+	int updateFocus();
 
 	static bool access;
 	static const int MIN_MAGNITUDE = 3;

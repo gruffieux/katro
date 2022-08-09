@@ -1,6 +1,7 @@
 #include <csound.h>
 #include "cplayer.h"
 #include "cball.h"
+#include "cnodelist.h"
 #include "main.h"
 
 bool Player::access = true;
@@ -35,11 +36,6 @@ Player::Player(int number, Str name) : Object(name)
 Player::~Player()
 {
 	delete board;
-}
-
-void Player::abandon()
-{
-	insertAction(TURN_ABORT, true);
 }
 
 void Player::abortTurn()
@@ -614,6 +610,20 @@ bool Player::releaseBalls(int n)
 	return true;
 }
 
+void Player::resetVScore()
+{
+	Hole* hole;
+	LinkedList<Hole*>::Iterator iterator(board->getHoles());
+
+	hole = iterator.first();
+
+	while (hole)
+	{
+		hole->setVScore(-1);
+		hole = iterator.next();
+	}
+}
+
 void Player::startTurn(Board::Direction direction)
 {
 	currentDirX = direction;
@@ -656,8 +666,24 @@ bool Player::takeBalls(Hole *hole)
 	return true;
 }
 
-bool Player::updateFocus()
+int Player::tryFocus(int index, int holes)
 {
+	int height = 2;
+	int width = holes / height;
+	Node* node = new Node(width, height, focus);
+
+	node->init(opponent->getBoard()->getHoles(), false);
+	node->init(board->getHoles(), true);
+
+	if (!node->simulate(index, true, 12))
+		return -1;
+	
+	return node->getScore();
+}
+
+int Player::updateFocus()
+{
+	int i = 0;
 	Hole *hole;
 	LinkedList<Hole*>::Iterator iterator(board->getHoles());
 
@@ -668,12 +694,13 @@ bool Player::updateFocus()
 		if (hole->collision(hand))
 		{
 			focus = hole;
-			return true;
+			return i;
 		}
 		hole = iterator.next();
+		i++;
 	}
 
 	focus = NULL;
 
-	return false;
+	return -1;
 }

@@ -112,13 +112,6 @@ GameScene::~GameScene()
 	scoreIndicators.RemoveAllElement(0, true);
 }
 
-void GameScene::abandon(Player *player)
-{
-	player->abandon();
-	winner = player->getOpponent()->getNumber();
-	separator->setName(BuildString("%s abandonne, %s a gagné la partie!", player->getName()->Get(), player->getOpponent()->getName()->Get()));
-}
-
 Player* GameScene::currentPlayer()
 {
 	if (playersIter.hasCurrent())
@@ -150,6 +143,7 @@ void GameScene::destroyAni()
 	Player *player;
 	LinkedList<Player*>::Iterator iterator(&players);
 
+	testText.Destroy();
 	turnIndicator.Destroy();
 	title->destroyAni();
 	backButton->destroyAni();
@@ -181,7 +175,17 @@ void GameScene::doMouseEvents(Cursor *cursor)
 {
 	// On cible le trou sous la main du joueur
 	if (cursor->getClickState() == Cursor::NO_CLICK)
-		currentPlayer()->updateFocus();
+	{
+		int index = currentPlayer()->updateFocus();
+		if (Player::access && index != -1 && currentPlayer()->getFocus()->getVScore() == -1)
+		{
+			int score = currentPlayer()->tryFocus(index, holesTotal);
+			if (score != -1)
+				currentPlayer()->getFocus()->setVScore(score);
+			else
+				currentPlayer()->getFocus()->setVScore(-999);
+		}
+	}
 
 	// Quand un bouton est relâché
 	switch (cursor->buttonReleased())
@@ -193,21 +197,34 @@ void GameScene::doMouseEvents(Cursor *cursor)
 			scenario.goToScene(MAIN_MENU_ID);
 		}
 		else if (cursor->collision(currentPlayer()->getBoard()) && !winner)
-			switch (currentPlayer()->getNumber())
+		{
+			if (currentPlayer()->getFocus()->getVScore() == -999)
 			{
-			case 1:
-				if (currentPlayer()->getFocus()->getRank() == Hole::BACK)
-					currentPlayer()->startTurn(Board::RightToLeft);
-				else
-					currentPlayer()->startTurn(Board::LeftToRight);
-				break;
-			case 2:
-				if (currentPlayer()->getFocus()->getRank() == Hole::FRONT)
-					currentPlayer()->startTurn(Board::LeftToRight);
-				else
-					currentPlayer()->startTurn(Board::RightToLeft);
-				break;
+				separator->setName("Cible invalide car peut provoquer une boucle infinie!");
+				updateTurnIndicator(RGB(255, 9, 33));
 			}
+			else
+			{
+				currentPlayer()->resetVScore();
+				switch (currentPlayer()->getNumber())
+				{
+				case 1:
+					if (currentPlayer()->getFocus()->getRank() == Hole::BACK)
+						currentPlayer()->startTurn(Board::RightToLeft);
+					else
+						currentPlayer()->startTurn(Board::LeftToRight);
+					break;
+				case 2:
+					if (currentPlayer()->getFocus()->getRank() == Hole::FRONT)
+						currentPlayer()->startTurn(Board::LeftToRight);
+					else
+						currentPlayer()->startTurn(Board::RightToLeft);
+					break;
+				}
+				separator->setName(BuildString("C'est à %s de jouer...", currentPlayer()->getName()->Get()));
+				updateTurnIndicator();
+			}
+		}
 		break;
 	case Cursor::RIGHT_CLICK:
 		break;
@@ -687,6 +704,10 @@ void GameScene::restoreAni()
 	}
 
 	updateTurnIndicator();
+
+	Hole* focus = currentPlayer()->getFocus();
+	if (focus)
+		displayer->LoadText(&testText, NULL, focus->getVScore(), RGB(0, 0, 0), RGB(255, 255, 255));
 }
 
 void GameScene::runAnimations()
@@ -728,6 +749,13 @@ void GameScene::runAnimations()
 		bottomDeco[i]->runAnimations();
 
 	backButton->runAnimations();
+
+	Hole* focus = currentPlayer()->getFocus();
+	if (focus)
+	{
+		displayer->LoadText(&testText, NULL, focus->getVScore(), RGB(0, 0, 0), RGB(255, 255, 255));
+		displayer->Blit(displayer->GetCurrentMode()->GetWidth() - 80, 0, &testText, NULL, NULL, DDBLT_WAIT);
+	}
 }
 
 void GameScene::setCurrentPlayer(int number)
@@ -865,11 +893,11 @@ void GameScene::start()
 	updateTurnIndicator();
 }
 
-void GameScene::updateTurnIndicator()
+void GameScene::updateTurnIndicator(unsigned long textColor)
 {
 	if (separator->getName()->GetLength())
 	{
-		displayer->LoadText(&turnIndicator, NULL, separator->getName()->Get(), RGB(0, 0, 0), RGB(255, 255, 255));
+		displayer->LoadText(&turnIndicator, NULL, separator->getName()->Get(), RGB(0, 0, 0), textColor);
 		turnIndicator.SetColorKey(RGB(0, 0, 0));
 	}
 }

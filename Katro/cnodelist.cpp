@@ -110,7 +110,7 @@ bool Node::simulate(int index, bool player, int maxRounds)
 			if (y == y1 && opBoard[y2][x])
 			{
 				balls += opBoard[y2][x];
-				score += balls;
+				score += opBoard[y2][x];
 				opBoard[y2][x] = 0;
 			}
 		}

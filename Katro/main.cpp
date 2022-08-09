@@ -75,9 +75,6 @@ Cursor *cursor;
 ScenesLinker scenario;
 List sounds, musics;
 
-// Surface textes pour testes
-Surface testText[2];
-
 // Définitions des fonctions
 /////////////////////////////////////
 
@@ -336,14 +333,6 @@ void PlayScene()
 	cursor->runAni(0, 0);
 	cursor->stickToMover();
 
-#ifdef _DEBUG
-	// On affiche les textes pour testes
-	//Screen->LoadText(&testText[0], NULL, keybListener.getFlowWaiter(0)->getCounter(), RGB(0, 0, 0), RGB(255, 255, 255));
-	//Screen->LoadText(&testText[1], NULL, keybListener.getFlowStarter()->getCounter(), RGB(0, 0, 0), RGB(255, 255, 255));
-	//Screen->Blit(Screen->GetCurrentMode()->GetWidth() - 80, 0, &testText[0], NULL, NULL, DDBLT_WAIT);
-	//Screen->Blit(Screen->GetCurrentMode()->GetWidth() - 40, 0, &testText[1], NULL, NULL, DDBLT_WAIT);
-#endif
-
 	// Double buffering
 	Screen->FlipFlap();
 }
@@ -368,11 +357,6 @@ bool ProcessKbInput()
 				gameScene->currentPlayer()->setName(keybListener.getInputString());
 				gameScene->updateTurnIndicator();
 			}
-		}
-		if (gameScene->currentPlayer()->getNumber() == 1 && keybListener.keyPressed(DIK_A))
-		{
-			gameScene->abandon(gameScene->currentPlayer());
-			gameScene->updateTurnIndicator();
 		}
 	}
 

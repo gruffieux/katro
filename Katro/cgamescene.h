@@ -22,7 +22,6 @@ public:
 	GameScene();
 	GameScene(int holesTotal, PlayerMode playerMode, GameMode gameMode, Mover *hand);
 	~GameScene();
-	void abandon(Player* player);
 	Player* currentPlayer();
 	void destroy();
 	void destroyAni();
@@ -53,14 +52,14 @@ public:
 	bool save();
 	static bool saveExists();
 	void start();
-	void updateTurnIndicator();
+	void updateTurnIndicator(unsigned long textColor=RGB(255, 255, 255));
 private:
 	static const int TOTAL_BOTTOM_DECO = 5;
 	static const int TOTAL_SHELL = 3;
 	int holesTotal, cpuLevel, winner, currentTrack;
 	PlayerMode playerMode;
 	GameMode gameMode;
-	Surface turnIndicator;
+	Surface turnIndicator, testText;
 	Visual *title, *backButton, *shell[TOTAL_SHELL], *bottomDeco[TOTAL_BOTTOM_DECO], *separator;
 	Panel *boards;
 	List nameIndicators, scoreIndicators, musicTracks;

@@ -26,6 +26,7 @@ public:
 	int getPlayerNb() {return playerNb;}
 	Hole* getPrevious() {return previous;}
 	Rank getRank() {return rank;}
+	int getVScore() {return vScore;}
 	void initAni();
 	void layBalls();
 	void link(LinkedList<Hole*> *holes);
@@ -36,9 +37,10 @@ public:
 	void setOpposite(Hole *opposite) {this->opposite = opposite;}
 	void setPrevious(Hole *previous) {this->previous = previous;}
 	void setRank(Rank rank) {this->rank = rank;}
+	void setVScore(int vScore) { this->vScore = vScore; }
 	void updateIndicator();
 private:
-	int playerNb;
+	int playerNb, vScore;
 	Rank rank;
 	Surface indicator;
 	Hole *next, *previous, *opposite;

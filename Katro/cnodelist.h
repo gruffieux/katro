@@ -21,7 +21,7 @@ public:
 	Node(int, int, Hole*);
 	~Node();
 	void init(LinkedList<Hole*>*, bool player);
-	bool simulate(int, bool, int);
+	bool simulate(int index, bool player, int maxRounds);
 	Hole* getFocus() { return focus; }
 	static Node* getNodeElement(List* pList, int index) { return dynamic_cast<Node*>(pList->GetElement(index)); }
 	int getScore() { return score; }

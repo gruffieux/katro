@@ -6,6 +6,7 @@
 Hole::Hole()
 {
 	playerNb = 0;
+	vScore = -1;
 	rank = FRONT;
 	next = previous = opposite = 0;
 }
@@ -13,6 +14,7 @@ Hole::Hole()
 Hole::Hole(int playerNb) : Item(0, 0, 128, 128, Str())
 {
 	this->playerNb = playerNb;
+	vScore = -1;
 	rank = FRONT;
 	next = previous = opposite = 0;
 }
@@ -22,6 +24,7 @@ Hole::Hole(Hole &model)
 	int i;
 
 	playerNb = model.getPlayerNb();
+	vScore = model.getVScore();
 	rank = model.getRank();
 	next = model.getNext();
 	previous = model.getPrevious();
