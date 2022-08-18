@@ -58,7 +58,7 @@ int PlayerIA::minimax(Node *node, int holes, int depth, bool maximizingPlayer, i
 	}
 	else
 	{
-		value = INFINITY;
+		value = Hole::VSCORE_INFINITY;
 		for (int i = 0; i < node->getChilds()->GetElementCount(); i++)
 		{
 			Node* child = Node::getNodeElement(node->getChilds(), i);
@@ -79,7 +79,7 @@ void PlayerIA::think(int holes)
 {
 	int i = 0;
 	Node* node = new Node();
-	int value = minimax(node, holes, level-1, true, -1, INFINITY);
+	int value = minimax(node, holes, level-1, true, -1, Hole::VSCORE_INFINITY);
 
 	focus = NULL;
 

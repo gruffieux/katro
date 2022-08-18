@@ -676,7 +676,7 @@ int Player::tryFocus(int index, int holes)
 	node->init(board->getHoles(), true);
 
 	if (!node->simulate(index, true, 12))
-		return -1;
+		return Hole::VSCORE_INFINITY;
 	
 	return node->getScore();
 }

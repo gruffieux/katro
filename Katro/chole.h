@@ -39,6 +39,7 @@ public:
 	void setRank(Rank rank) {this->rank = rank;}
 	void setVScore(int vScore) { this->vScore = vScore; }
 	void updateIndicator();
+	static const int VSCORE_INFINITY = 999;
 private:
 	int playerNb, vScore;
 	Rank rank;
