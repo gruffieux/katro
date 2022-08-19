@@ -17,11 +17,14 @@ public:
 class Node : public Object
 {
 public:
-	Node() { ; }
+	Node();
 	Node(int, int, Hole*);
 	~Node();
-	void init(LinkedList<Hole*>*, bool player);
+	void init(LinkedList<Hole*> *holes, bool player);
+	void init(int **board, int **playerBoard);
 	bool simulate(int index, bool player, int maxRounds);
+	int** getBoard() { return board; }
+	int** getPlayerBoard() { return playerBoard; }
 	Hole* getFocus() { return focus; }
 	static Node* getNodeElement(List* pList, int index) { return dynamic_cast<Node*>(pList->GetElement(index)); }
 	int getScore() { return score; }

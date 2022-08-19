@@ -21,19 +21,21 @@ int PlayerIA::minimax(Node *node, int holes, int depth, bool maximizingPlayer, i
 	int i = 0;
 	while (hole)
 	{
-		if (hole->getBalls()->GetElementCount())
+		Node* child = new Node(width, height, hole);
+		if (!node->getScore())
 		{
-			Node* child = new Node(width, height, hole);
 			child->init(board->getHoles(), false);
 			child->init(opponent->getBoard()->getHoles(), true);
-			if (!child->simulate(i, !maximizingPlayer, level * 4))
-			{
-				hole = iter.next();
-				i++;
-				continue;
-			}
-			node->getChilds()->AddElement(child);
 		}
+		else
+			child->init(node->getBoard(), node->getPlayerBoard());
+		if (!child->simulate(i, !maximizingPlayer, level * 4))
+		{
+			hole = iter.next();
+			i++;
+			continue;
+		}
+		node->getChilds()->AddElement(child);
 		hole = iter.next();
 		i++;
 	}

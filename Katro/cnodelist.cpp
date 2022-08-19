@@ -1,5 +1,12 @@
 #include "cnodelist.h"
 
+Node::Node()
+{
+	width = height = score = 0;
+	focus = NULL;
+	board = playerBoard = NULL;
+}
+
 Node::Node(int width, int height, Hole* focus)
 {
 	this->width = width;
@@ -39,13 +46,11 @@ void Node::init(LinkedList<Hole*>* holes, bool player)
 	int y = 1;
 	LinkedList<Hole*>::Iterator iter(holes);
 	Hole* hole = iter.first();
-	score = 0;
 
 	// Le premier trou se trouve en bas à gauche et le dernier en haut à gauche
 	while (hole)
 	{
 		int balls = hole->getBalls()->GetElementCount();
-		score += balls;
 		if (player)
 			playerBoard[y][x] = balls;
 		else
@@ -62,6 +67,16 @@ void Node::init(LinkedList<Hole*>* holes, bool player)
 				x--;
 		hole = iter.next();
 	}
+}
+
+void Node::init(int **board, int **playerBoard)
+{
+	for (int x = 0; x < width; x++)
+		for (int y = 0; y < 2; y++)
+		{
+			this->board[y][x] = board[y][x];
+			this->playerBoard[y][x] = playerBoard[y][x];
+		}
 }
 
 bool Node::simulate(int index, bool player, int maxRounds)
@@ -110,7 +125,6 @@ bool Node::simulate(int index, bool player, int maxRounds)
 			if (y == y1 && opBoard[y2][x])
 			{
 				balls += opBoard[y2][x];
-				score += opBoard[y2][x];
 				opBoard[y2][x] = 0;
 			}
 		}
@@ -122,6 +136,11 @@ bool Node::simulate(int index, bool player, int maxRounds)
 			return false;
 		}	
 	}
+
+	score = 0;
+	for (x = 0; x < width; x++)
+		for (y = 0; y < 2; y++)
+			score += board[y][x];
 
 	return true;
 }
@@ -144,6 +163,14 @@ NodeList::~NodeList()
 
 bool NodeList::filterHighestScore(int index)
 {
+	int i = 0;
+
+	while (i < ElementCount)
+		if (!Node::getNodeElement(this, i)->getFocus()->getBalls()->GetElementCount())
+			RemoveElement(i, 1, true);
+		else
+			i++;
+
 	OrderBy(NodeList::ORDER_BY_SCORE);
 	ReverseOrder();
 
