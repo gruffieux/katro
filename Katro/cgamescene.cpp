@@ -702,9 +702,11 @@ void GameScene::restoreAni()
 
 	updateTurnIndicator();
 
+#ifdef _DEBUG
 	Hole* focus = currentPlayer()->getFocus();
 	if (focus)
 		displayer->LoadText(&testText, NULL, focus->getVScore(), RGB(0, 0, 0), RGB(255, 255, 255));
+#endif
 }
 
 void GameScene::runAnimations()
@@ -747,12 +749,14 @@ void GameScene::runAnimations()
 
 	backButton->runAnimations();
 
+#ifdef _DEBUG
 	Hole* focus = currentPlayer()->getFocus();
 	if (focus)
 	{
 		displayer->LoadText(&testText, NULL, focus->getVScore(), RGB(0, 0, 0), RGB(255, 255, 255));
 		displayer->Blit(displayer->GetCurrentMode()->GetWidth() - 80, 0, &testText, NULL, NULL, DDBLT_WAIT);
 	}
+#endif
 }
 
 void GameScene::setCurrentPlayer(int number)
