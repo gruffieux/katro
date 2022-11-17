@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KaRes", "KaRes\KaRes.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameConfig", "..\GameConfig\GameConfig\GameConfig.vcxproj", "{3E0776DE-F13B-4752-8272-1964C411B064}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{845463D7-FFE2-44B3-80E4-014320275CD6}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{D66155B6-591B-4D4F-ACBB-C6DAD1FDB87B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,8 +29,8 @@ Global
 		{3E0776DE-F13B-4752-8272-1964C411B064}.Debug|Win32.Build.0 = Debug|Win32
 		{3E0776DE-F13B-4752-8272-1964C411B064}.Release|Win32.ActiveCfg = Release|Win32
 		{3E0776DE-F13B-4752-8272-1964C411B064}.Release|Win32.Build.0 = Release|Win32
-		{845463D7-FFE2-44B3-80E4-014320275CD6}.Debug|Win32.ActiveCfg = Debug
-		{845463D7-FFE2-44B3-80E4-014320275CD6}.Release|Win32.ActiveCfg = Release
+		{D66155B6-591B-4D4F-ACBB-C6DAD1FDB87B}.Debug|Win32.ActiveCfg = Debug
+		{D66155B6-591B-4D4F-ACBB-C6DAD1FDB87B}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
