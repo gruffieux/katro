@@ -128,6 +128,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -520,6 +528,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_8AC07ADE2B7A480495E6E279EB39EF6D"
+                    {
+                    "Name" = "8:Gabtek"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_4416ABB6D6994865B82AA388E79CE251"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_61C6D443E60C4282B339C058AF5DE952"
@@ -679,7 +698,7 @@
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
             "Target" = "8:_BA708B7154E843E3A6739A74172FB97F"
-            "Folder" = "8:_25FCDD513B5B4C42B55A221963F2CC63"
+            "Folder" = "8:_8AC07ADE2B7A480495E6E279EB39EF6D"
             "WorkingFolder" = "8:_1B2B2AED2CDC433E9FE4BF69A6AB7A09"
             "Icon" = "8:_CD33270BE3C44465936EB43F65A9D8FB"
             "Feature" = "8:"
@@ -693,7 +712,7 @@
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
             "Target" = "8:_6094AA3ABADF42CC99AED4F3DFDE451D"
-            "Folder" = "8:_25FCDD513B5B4C42B55A221963F2CC63"
+            "Folder" = "8:_8AC07ADE2B7A480495E6E279EB39EF6D"
             "WorkingFolder" = "8:_1B2B2AED2CDC433E9FE4BF69A6AB7A09"
             "Icon" = "8:_35DBA201EC314E32B023C434B457848C"
             "Feature" = "8:"
